@@ -1,0 +1,20 @@
+$ git init
+Initialized empty Git repository in D:/ubuntu/test_repo/.git/
+$ git add test_file.txt
+warning: in the working copy of 'test_file.txt', LF will be replaced by CRLF the next time Git touches it
+$ git commit -am "First Commit"
+[master (root-commit) 597f1e8] First Commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 test_file.txt
+$ git remote add origin https://github.com/Harshjain81/test_repo.git
+$ git push -u origin master
+info: please complete authentication in your browser...
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 250 bytes | 250.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/Harshjain81/test_repo.git
+ * [new branch]      master -> master
+branch 'master' set up to track 'origin/master'.
+$ git pull
+Already up to date.

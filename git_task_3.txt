@@ -1,0 +1,27 @@
+$ git checkout -b new_branch
+Switched to a new branch 'new_branch'
+$ git commit -am "Second Commit"
+[new_branch 78f4640] Second Commit
+ 1 file changed, 2 insertions(+)
+$ git switch master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+$ git merge new_branch
+Updating 597f1e8..78f4640
+Fast-forward
+ test_file.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+$ git branch
+* master
+  new_branch
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 307 bytes | 153.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/Harshjain81/test_repo.git
+   597f1e8..78f4640  master -> master
+$ git pull
+Already up to date.
