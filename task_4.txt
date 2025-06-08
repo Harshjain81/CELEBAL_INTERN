@@ -1,0 +1,62 @@
+$ sudo groupadd new_group
+$ grep new_group /etc/group
+new_group:x:1003:
+$ sudo useradd -m -g new_group new_user
+useradd: warning: the home directory /home/new_user already exists.
+useradd: Not copying any file from skel directory into it.
+$ sudo passwd new_user
+New password:
+Retype new password:
+passwd: password updated successfully
+$ id new_user
+uid=1001(new_user) gid=1003(new_group) groups=1003(new_group)
+$ sudo usermode -aG sudo new_user
+sudo: usermode: command not found
+$ sudo usermod -aG sudo new_user
+$ id new_user
+uid=1001(new_user) gid=1003(new_group) groups=1003(new_group),27(sudo)
+$ sudo groupadd another_group
+groupadd: group 'another_group' already exists
+$ sudo delgroup another_group
+info: Removing group `another_group' ...
+$ sudo groupadd another_group
+$ sudo usermod -g another_group new_user
+$ id new_user
+uid=1001(new_user) gid=1004(another_group) groups=1004(another_group),27(sudo)
+$ sudo usermod -d /home/new_user_custom_home new_user
+$ sudo mv /home/new_user /home/new_user_custom_home
+$ grep new_user /etc/passwd
+new_user:x:1001:1004::/home/new_user_custom_home:/bin/sh
+$ sudo -u new_user touch /home/new_user/test_file.txt
+touch: cannot touch '/home/new_user/test_file.txt': No such file or directory
+$ sudo -u new_user mkdir /home/new_user/test_dir
+mkdir: cannot create directory ‘/home/new_user/test_dir’: No such file or directory
+$ sudo -u new_user mkdir /home/new_user_custom_home/test_dir
+$ sudo -u new_user touch /home/new_user_custom_home/test_file.txt
+$ sudo chmod 600 /home/new_user_custom_home/test_file.txt
+$ sudo chmod 755 /home/new_user_custom_home/test_dir
+$ sudo chmod 644 /home/new_user_custom_home/test_file.txt
+$ ls -l /home/new_user/test_file.txt
+ls: cannot access '/home/new_user/test_file.txt': No such file or directory
+$ ls -l /home/new_user_custom_home/test_file.txt
+ls: cannot access '/home/new_user_custom_home/test_file.txt': Permission denied
+$ ls -l /home/new_user_custom_home/test_dir
+ls: cannot access '/home/new_user_custom_home/test_dir': Permission denied
+$ sudo chown root /home/new_user_custom_home/test_file.txt
+$ sudo chgrp another_group /home/new_user_custom_home/test_file.txt
+$ sudo chown root:new_group /home/new_user_custom_home/test_dir
+$ ls -l /home/new_user_custom_home/test_file.txt
+ls: cannot access '/home/new_user_custom_home/test_file.txt': Permission denied
+$ ls -l /home/new_user_custom_home/test_dir
+ls: cannot access '/home/new_user_custom_home/test_dir': Permission denied
+$ sudo userdel new_user
+$ sudo userdel -r new_user
+userdel: user 'new_user' does not exist
+$ id new_user
+id: ‘new_user’: no such user
+$ ls -ld /home/new_user_custom_home
+drwxr-x--- 3 1001 1001 4096 Jun  8 16:14 /home/new_user_custom_home
+$ sudo groupdel new_group
+$ sudo groupdel another_group
+$ grep new_group /etc/group
+$ grep another_group /etc/group
